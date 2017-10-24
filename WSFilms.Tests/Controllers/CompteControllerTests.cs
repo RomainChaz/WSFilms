@@ -29,7 +29,7 @@ namespace WSFilms.Controllers.Tests
         {
             InitTest();
             IQueryable<T_E_COMPTE_CPT> comptes = this.cc.GetCompte();
-            Assert.AreEqual(comptes.Count(), 4);
+            Assert.IsNotNull(comptes);
             CleanTest();
         }
 
@@ -86,9 +86,10 @@ namespace WSFilms.Controllers.Tests
 
             this.cc.PostCompte(toAdd);
 
-            IQueryable<T_E_COMPTE_CPT> comptes3 = this.cc.GetCompte();
+            OkNegotiatedContentResult<T_E_COMPTE_CPT> result = (OkNegotiatedContentResult<T_E_COMPTE_CPT>)this.cc.GetCompte("romain.chazottier@gmail.com");
 
-            Assert.AreEqual(comptes3.Count(), 5);
+            // Check if compte is null
+            Assert.IsNotNull(result);
 
             this.cc.DeleteCompte(toAdd.CPT_ID);
         }
